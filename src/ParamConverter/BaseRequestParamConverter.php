@@ -9,7 +9,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class BaseRequestParamConverter implements ParamConverterInterface
 {
-    public function __construct(private ValidatorInterface $validator) {}
+    public function __construct(private ValidatorInterface $validator)
+    {
+    }
 
     protected function populateAndValidate(Request $request, object $requestObject, string $requestKey): void
     {
@@ -17,7 +19,7 @@ abstract class BaseRequestParamConverter implements ParamConverterInterface
         $data = $allReq[$requestKey] ?? [];
 
         foreach ($data as $key => $value) {
-            $setterMethod = 'set' . ucfirst($key);
+            $setterMethod = 'set'.ucfirst($key);
             if (method_exists($requestObject, $setterMethod)) {
                 $requestObject->$setterMethod($value);
             }

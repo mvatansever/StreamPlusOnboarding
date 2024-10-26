@@ -14,6 +14,7 @@ trait FormErrorUtil
         foreach ($form->getErrors(true) as $error) {
             $errors[$error->getOrigin()->getName()] = $error->getMessage();
         }
+
         return $errors;
     }
 

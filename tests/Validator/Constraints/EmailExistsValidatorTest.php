@@ -29,7 +29,7 @@ class EmailExistsValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate('existing@example.com', new EmailExists());
 
-        $this->buildViolation('The email "{{ string }}" is already in use.')
+        $this->buildViolation('The email "{{ string }}" does not exist.')
             ->setParameter('{{ string }}', 'existing@example.com')
             ->assertRaised();
     }

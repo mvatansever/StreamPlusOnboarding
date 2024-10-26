@@ -19,6 +19,7 @@ class SubmitRequestParamConverter extends BaseRequestParamConverter
         $this->validateRequest($request, $submitRequest);
 
         $request->attributes->set($configuration->getName(), $submitRequest);
+
         return true;
     }
 

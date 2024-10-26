@@ -2,16 +2,15 @@
 
 namespace App\Validator\Constraints;
 
-use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * @Annotation
  */
-#[Attribute]
+#[\Attribute]
 class EmailExists extends Constraint
 {
-    public string $message = 'The email "{{ string }}" is already in use.';
+    public string $message = 'The email "{{ string }}" does not exist.';
 
     public function getTargets(): string|array
     {

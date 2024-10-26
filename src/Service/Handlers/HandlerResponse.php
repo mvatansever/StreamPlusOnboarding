@@ -4,14 +4,21 @@ namespace App\Service\Handlers;
 
 class HandlerResponse implements \JsonSerializable
 {
-    public function __construct(private bool $success, private string $redirectUrl, private array $errors = []){}
+    public function __construct(private bool $success, private string $redirectUrl)
+    {
+    }
 
+    /**
+     * @return array{
+     *     success: bool,
+     *     redirectUrl: string
+     * }
+     */
     public function jsonSerialize(): array
     {
         return [
             'success' => $this->success,
             'redirectUrl' => $this->redirectUrl,
-            'errors' => $this->errors,
         ];
     }
 

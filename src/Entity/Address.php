@@ -11,34 +11,34 @@ class Address
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
-    private $addressLine1;
+    private ?string $addressLine1;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $addressLine2;
+    private ?string $addressLine2;
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank]
-    private $city;
+    private ?string $city;
 
     #[ORM\Column(type: 'string', length: 20)]
     #[Assert\NotBlank]
-    private $postalCode;
+    private ?string $postalCode;
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank]
-    private $stateProvince;
+    private ?string $stateProvince;
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank]
-    private $country;
+    private ?string $country;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'addresses')]
     #[ORM\JoinColumn(nullable: false)]
-    private $user;
+    private User $user;
 
     public function getId(): ?int
     {
@@ -57,57 +57,57 @@ class Address
         return $this;
     }
 
-    public function getAddressLine2()
+    public function getAddressLine2(): ?string
     {
         return $this->addressLine2;
     }
 
-    public function setAddressLine2($addressLine2): void
+    public function setAddressLine2(?string $addressLine2): void
     {
         $this->addressLine2 = $addressLine2;
     }
 
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function setCity($city): void
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
-    public function getPostalCode()
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
 
-    public function setPostalCode($postalCode): void
+    public function setPostalCode(string $postalCode): void
     {
         $this->postalCode = $postalCode;
     }
 
-    public function getStateProvince()
+    public function getStateProvince(): ?string
     {
         return $this->stateProvince;
     }
 
-    public function setStateProvince($stateProvince): void
+    public function setStateProvince(string $stateProvince): void
     {
         $this->stateProvince = $stateProvince;
     }
 
-    public function getCountry()
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    public function setCountry($country): void
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }

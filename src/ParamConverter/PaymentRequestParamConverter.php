@@ -14,6 +14,7 @@ class PaymentRequestParamConverter extends BaseRequestParamConverter
         $this->populateAndValidate($request, $paymentRequest, 'payment_request');
 
         $request->attributes->set($configuration->getName(), $paymentRequest);
+
         return true;
     }
 

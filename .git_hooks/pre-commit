@@ -1,0 +1,6 @@
+STAGED_FILES=`git diff --cached --name-only --diff-filter=d | grep .php$ | tr '\n' ' '`
+
+if [ ! -z "$STAGED_FILES" ]
+then
+    CODE_FIXER_TARGET=$STAGED_FILES make code-fixer-fix && git add $STAGED_FILES
+fi

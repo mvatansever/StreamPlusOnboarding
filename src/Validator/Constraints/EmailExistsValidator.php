@@ -6,13 +6,20 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class EmailExistsValidator extends ConstraintValidator
 {
-    public function __construct(private EntityManagerInterface $entityManager) {}
-
-    public function validate(mixed $value, Constraint $constraint)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
+    }
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if (!$constraint instanceof EmailExists) {
+            throw new UnexpectedTypeException($constraint, EmailExists::class);
+        }
+
         if (null === $value || '' === $value) {
             return; // Not validating null or empty values
         }

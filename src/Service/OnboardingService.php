@@ -2,15 +2,24 @@
 
 namespace App\Service;
 
-use App\Entity\User;
 use App\Entity\Address;
 use App\Entity\Payment;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OnboardingService
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager) {}
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
 
+    /**
+     * Save onboarding data.
+     *
+     * @param array<string, mixed> $addressData data related to the address
+     * @param array<string, mixed> $paymentData data related to the payment
+     * @param array<string, mixed> $userInfo    user information
+     */
     public function saveOnboardingData(array $userInfo, array $addressData, ?array $paymentData): void
     {
         $user = new User();
@@ -33,7 +42,7 @@ class OnboardingService
 
         $this->entityManager->persist($address);
 
-        if ($userInfo['subscriptionType'] === 'premium' && $paymentData) {
+        if ('premium' === $userInfo['subscriptionType'] && $paymentData) {
             $payment = new Payment();
             $payment->setCardNumber($paymentData['cardNumber']);
             $payment->setExpirationDate($paymentData['expirationDate']);

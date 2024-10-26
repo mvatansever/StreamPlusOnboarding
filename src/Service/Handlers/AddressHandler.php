@@ -2,13 +2,19 @@
 
 namespace App\Service\Handlers;
 
+use App\Request\AddressRequest;
 use App\Request\OnboardProcessStepRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AddressHandler implements HandlerInterface
 {
-    public function __construct(private readonly RequestStack $requestStack) {}
+    public function __construct(private readonly RequestStack $requestStack)
+    {
+    }
 
+    /**
+     * @param AddressRequest $stepRequest the request object containing payment data
+     */
     public function handle(OnboardProcessStepRequest $stepRequest): HandlerResponse
     {
         $this->requestStack->getSession()->set('address', [

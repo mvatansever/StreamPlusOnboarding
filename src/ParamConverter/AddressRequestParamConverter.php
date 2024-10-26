@@ -8,12 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressRequestParamConverter extends BaseRequestParamConverter
 {
-    public function apply(Request $request, ParamConverter $configuration):bool
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
         $addressRequest = new AddressRequest();
         $this->populateAndValidate($request, $addressRequest, 'address_request');
 
         $request->attributes->set($configuration->getName(), $addressRequest);
+
         return true;
     }
 

@@ -8,7 +8,10 @@ PROJECT_NAME = StreamPlusOnboarding
 .PHONY: build up down composer-install exec migrate cache-clear test build-assets
 
 # Run all necessary for first step.
-run-all: build up composer-install migrate build-assets
+run-all: build up composer-install migrate build-assets copy-hook
+
+copy-hook:
+	cp .git_hooks/pre-commit .git/hooks/pre-commit
 
 # Build Docker containers
 build:
@@ -46,3 +49,10 @@ build-assets:
 # Run tests
 test:
 	$(DOCKER_PHP) vendor/bin/phpunit
+
+code-fixer-fix:
+	docker-compose run --rm php sh -c 'vendor/bin/php-cs-fixer fix src'
+
+phpstan-check:
+	docker-compose run --rm php sh -c '\
+	./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G'

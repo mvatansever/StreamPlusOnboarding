@@ -14,6 +14,7 @@ class UserInfoRequestParamConverter extends BaseRequestParamConverter
         $this->populateAndValidate($request, $userInfoRequest, 'user_info_request');
 
         $request->attributes->set($configuration->getName(), $userInfoRequest);
+
         return true;
     }
 

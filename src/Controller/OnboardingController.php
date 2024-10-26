@@ -6,10 +6,12 @@ use App\Form\AddressRequestType;
 use App\Form\PaymentRequestType;
 use App\Form\UserInfoRequestType;
 use App\Request\AddressRequest;
+use App\Request\OnboardProcessStepRequest;
 use App\Request\PaymentRequest;
 use App\Request\SubmitRequest;
 use App\Request\UserInfoRequest;
 use App\Service\Handlers\AddressHandler;
+use App\Service\Handlers\HandlerInterface;
 use App\Service\Handlers\HandlerResponse;
 use App\Service\Handlers\PaymentHandler;
 use App\Service\Handlers\SubmitHandler;
@@ -69,7 +71,7 @@ class OnboardingController extends AbstractController
         return $this->render('onboarding/complete.html.twig');
     }
 
-    private function handleForm($handler, $requestData, Request $request, FormFactoryInterface $formFactory, ?string $requestTypeClass, string $template): Response
+    private function handleForm(HandlerInterface $handler, OnboardProcessStepRequest $requestData, Request $request, FormFactoryInterface $formFactory, ?string $requestTypeClass, string $template): Response
     {
         if ($request->isXmlHttpRequest()) {
             return $this->handleResponse($handler->handle($requestData));
