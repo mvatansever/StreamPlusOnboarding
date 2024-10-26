@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('email')]
 class User
 {
+    public const FREE_USER = 'free';
+    public const PREMIUM_USER = 'premium';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -30,7 +33,7 @@ class User
     private ?string $phone;
 
     #[ORM\Column(type: 'string', length: 10)]
-    #[Assert\Choice(choices: ['free', 'premium'], message: 'Choose a valid subscription type.')]
+    #[Assert\Choice(choices: [self::FREE_USER, self::PREMIUM_USER], message: 'Choose a valid subscription type.')]
     private ?string $subscriptionType;
 
     /**

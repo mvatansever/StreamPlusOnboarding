@@ -2,6 +2,7 @@
 
 namespace App\Tests\Service;
 
+use App\Entity\User;
 use App\Service\OnboardingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -31,7 +32,7 @@ class OnboardingServiceTest extends TestCase
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'phone' => '1234567890',
-            'subscriptionType' => 'free',
+            'subscriptionType' => User::FREE_USER,
         ];
 
         $addressData = [

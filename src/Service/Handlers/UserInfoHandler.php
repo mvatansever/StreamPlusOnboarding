@@ -2,6 +2,7 @@
 
 namespace App\Service\Handlers;
 
+use App\Entity\User;
 use App\Request\OnboardProcessStepRequest;
 use App\Request\UserInfoRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -25,7 +26,7 @@ class UserInfoHandler implements HandlerInterface
             'subscriptionType' => $stepRequest->getSubscriptionType(),
         ]);
 
-        $redirectUrl = 'premium' === $stepRequest->getSubscriptionType() ? 'onboarding_payment' : 'onboarding_address';
+        $redirectUrl = User::PREMIUM_USER === $stepRequest->getSubscriptionType() ? 'onboarding_payment' : 'onboarding_address';
 
         return new HandlerResponse(true, $redirectUrl);
     }

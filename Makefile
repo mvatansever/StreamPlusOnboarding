@@ -9,6 +9,7 @@ PROJECT_NAME = StreamPlusOnboarding
 
 # Run all necessary for first step.
 run-all: build up composer-install migrate build-assets copy-hook
+	@echo "You can now open this link and start using the app: http://0.0.0.0:8080/onboarding/user-info"
 
 copy-hook:
 	cp .git_hooks/pre-commit .git/hooks/pre-commit

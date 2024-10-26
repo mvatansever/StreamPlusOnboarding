@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Request\UserInfoRequest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,7 +27,7 @@ class UserInfoRequestType extends AbstractType
                 'constraints' => [new Assert\Regex('/^\d{10,15}$/')],
             ])
             ->add('subscriptionType', ChoiceType::class, [
-                'choices' => ['Free' => 'free', 'Premium' => 'premium'],
+                'choices' => ['Free' => User::FREE_USER, 'Premium' => User::PREMIUM_USER],
                 'constraints' => [new Assert\NotBlank()],
             ]);
     }

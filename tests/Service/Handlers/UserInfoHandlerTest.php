@@ -2,6 +2,7 @@
 
 namespace App\Tests\Service\Handlers;
 
+use App\Entity\User;
 use App\Request\UserInfoRequest;
 use App\Service\Handlers\UserInfoHandler;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +48,7 @@ class UserInfoHandlerTest extends TestCase
                     'name' => 'Test User',
                     'email' => 'test@example.com',
                     'phone' => '1234567890',
-                    'subscriptionType' => 'free',
+                    'subscriptionType' => User::FREE_USER,
                 ],
                 'onboarding_address',
             ],
@@ -56,7 +57,7 @@ class UserInfoHandlerTest extends TestCase
                     'name' => 'Premium User',
                     'email' => 'premium@example.com',
                     'phone' => '0987654321',
-                    'subscriptionType' => 'premium',
+                    'subscriptionType' => User::PREMIUM_USER,
                 ],
                 'onboarding_payment',
             ],
@@ -68,7 +69,7 @@ class UserInfoHandlerTest extends TestCase
         $userInfoRequest->setName('Test User');
         $userInfoRequest->setEmail('test@example.com');
         $userInfoRequest->setPhone('1234567890');
-        $userInfoRequest->setSubscriptionType('free');
+        $userInfoRequest->setSubscriptionType(User::FREE_USER);
 
         $this->session->expects($this->once())
             ->method('set')
@@ -76,7 +77,7 @@ class UserInfoHandlerTest extends TestCase
                 'name' => 'Test User',
                 'email' => 'test@example.com',
                 'phone' => '1234567890',
-                'subscriptionType' => 'free',
+                'subscriptionType' => User::FREE_USER,
             ]);
 
         $this->userInfoHandler->handle($userInfoRequest);

@@ -42,7 +42,7 @@ class OnboardingService
 
         $this->entityManager->persist($address);
 
-        if ('premium' === $userInfo['subscriptionType'] && $paymentData) {
+        if (User::PREMIUM_USER === $userInfo['subscriptionType'] && $paymentData) {
             $payment = new Payment();
             $payment->setCardNumber($paymentData['cardNumber']);
             $payment->setExpirationDate($paymentData['expirationDate']);
