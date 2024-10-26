@@ -57,3 +57,9 @@ services:
     App\Service\Handlers\SubmitHandler:
         arguments:
             $requestStack: '@request_stack'
+
+    App\Validator\Constraints\EmailExistsValidator:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+        tags:
+            - { name: validator.constraint_validator }

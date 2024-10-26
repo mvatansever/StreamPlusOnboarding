@@ -2,6 +2,7 @@
 // src/Request/UserInfoRequest.php
 namespace App\Request;
 
+use App\Validator\Constraints\EmailExists;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UserInfoRequest extends OnboardProcessStepRequest
@@ -11,6 +12,7 @@ class UserInfoRequest extends OnboardProcessStepRequest
 
     #[Assert\NotBlank]
     #[Assert\Email]
+    #[EmailExists]
     private ?string $email;
 
     #[Assert\Regex('/^\d{10,15}$/')]
