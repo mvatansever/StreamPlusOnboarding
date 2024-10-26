@@ -27,8 +27,6 @@ class Payment
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    // Getters and setters...
-
     public function getId(): ?int
     {
         return $this->id;

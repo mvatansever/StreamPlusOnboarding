@@ -15,7 +15,6 @@ class SubmitRequest extends OnboardProcessStepRequest
     #[Assert\NotBlank]
     private ?array $payment;
 
-    // Getters and Setters
     public function getUserInfo(): ?array
     {
         return $this->userInfo;

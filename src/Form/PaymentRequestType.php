@@ -1,6 +1,5 @@
 <?php
 
-// src/Form/PaymentType.php
 namespace App\Form;
 
 use App\Validator\Constraints\FutureExpirationDate;

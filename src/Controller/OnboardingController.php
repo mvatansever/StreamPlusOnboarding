@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OnboardingController extends AbstractController
 {
-
     #[Route('/onboarding/user-info', name: 'onboarding_user_info')]
     public function userInfo(UserInfoHandler $handler, UserInfoRequest $userInfoRequest, Request $request, FormFactoryInterface $formFactory): Response
     {

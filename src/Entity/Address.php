@@ -1,6 +1,5 @@
 <?php
 
-// src/Entity/Address.php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -40,8 +39,6 @@ class Address
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'addresses')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
-
-    // Getters and setters for each property...
 
     public function getId(): ?int
     {

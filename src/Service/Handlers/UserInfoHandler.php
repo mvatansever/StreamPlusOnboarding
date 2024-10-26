@@ -13,7 +13,6 @@ class UserInfoHandler implements HandlerInterface
 
     public function handle(OnboardProcessStepRequest $stepRequest): HandlerResponse
     {
-        // Store the validated user info in the session
         $this->requestStack->getSession()->set('user_info', [
             'name' => $stepRequest->getName(),
             'email' => $stepRequest->getEmail(),

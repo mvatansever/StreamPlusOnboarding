@@ -1,5 +1,5 @@
 <?php
-// src/Request/AddressRequest.php
+
 namespace App\Request;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +25,6 @@ class AddressRequest extends OnboardProcessStepRequest
     #[Assert\NotBlank]
     private ?string $country;
 
-    // Getters and Setters
     public function getAddressLine1(): ?string
     {
         return $this->addressLine1;

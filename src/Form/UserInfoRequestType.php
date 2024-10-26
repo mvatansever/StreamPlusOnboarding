@@ -1,5 +1,5 @@
 <?php
-// src/Form/UserInfoRequestType.php
+
 namespace App\Form;
 
 use App\Request\UserInfoRequest;

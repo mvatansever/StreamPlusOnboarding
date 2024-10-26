@@ -1,5 +1,5 @@
 <?php
-// src/Request/PaymentRequest.php
+
 namespace App\Request;
 
 use App\Validator\Constraints\FutureExpirationDate;
@@ -22,7 +22,6 @@ class PaymentRequest extends OnboardProcessStepRequest
     #[Assert\Regex('/^\d{3}$/', message: 'CVV must be 3 digits.')]
     private ?string $cvv;
 
-    // Getters and Setters
     public function getCardNumber(): ?string
     {
         return $this->cardNumber;

@@ -1,5 +1,4 @@
 <?php
-// src/Validator/Constraints/FutureExpirationDate.php
 
 namespace App\Validator\Constraints;
 

@@ -1,5 +1,5 @@
 <?php
-// src/Request/UserInfoRequest.php
+
 namespace App\Request;
 
 use App\Validator\Constraints\EmailExists;
@@ -8,20 +8,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserInfoRequest extends OnboardProcessStepRequest
 {
     #[Assert\NotBlank]
-    private ?string $name;
+    private ?string $name = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
     #[EmailExists]
-    private ?string $email;
+    private ?string $email = null;
 
     #[Assert\Regex('/^\d{10,15}$/')]
-    private ?string $phone;
+    private ?string $phone = null;
 
     #[Assert\NotBlank]
-    private ?string $subscriptionType;
+    private ?string $subscriptionType = null;
 
-    // Getters and Setters
     public function getName(): ?string
     {
         return $this->name;

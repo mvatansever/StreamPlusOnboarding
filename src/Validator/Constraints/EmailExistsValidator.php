@@ -20,7 +20,6 @@ class EmailExistsValidator extends ConstraintValidator
         $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $value]);
 
         if ($existingUser) {
-            // Add violation if the email already exists
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();

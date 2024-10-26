@@ -17,3 +17,5 @@ app/config/packages/dev/local.yaml
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+.phpunit.result.cache

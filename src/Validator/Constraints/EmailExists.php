@@ -13,8 +13,8 @@ class EmailExists extends Constraint
 {
     public string $message = 'The email "{{ string }}" is already in use.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
-        return self::PROPERTY_CONSTRAINT; // Change this to PROPERTY_CONSTRAINT
+        return self::PROPERTY_CONSTRAINT;
     }
 }

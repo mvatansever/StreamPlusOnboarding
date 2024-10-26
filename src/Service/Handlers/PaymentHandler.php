@@ -11,7 +11,6 @@ class PaymentHandler implements HandlerInterface
 
     public function handle(OnboardProcessStepRequest $stepRequest): HandlerResponse
     {
-        // Store the validated payment in the session
         $this->requestStack->getSession()->set('payment', [
             'cardNumber' => $stepRequest->getCardNumber(),
             'expirationDate' => $stepRequest->getExpirationDate(),

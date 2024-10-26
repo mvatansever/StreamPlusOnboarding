@@ -33,13 +33,11 @@ class OnboardingService
 
         $this->entityManager->persist($address);
 
-        // Create Payment entity if needed and associate it with User
         if ($userInfo['subscriptionType'] === 'premium' && $paymentData) {
             $payment = new Payment();
             $payment->setCardNumber($paymentData['cardNumber']);
             $payment->setExpirationDate($paymentData['expirationDate']);
 
-            // Associate the payment with the user
             $user->setPayment($payment);
 
             $this->entityManager->persist($payment);
