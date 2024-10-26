@@ -1,20 +1,13 @@
+.idea/
+.DS_Store
+._.DS_Store
 
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
+app/vendor
+app/vendor/composer/
+app/vendor/symfony/flex/
+
+app/.doc.env
+app/config/packages/dev/local.yaml
+
 /vendor/
-###< symfony/framework-bundle ###
-
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
-
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+/var/
