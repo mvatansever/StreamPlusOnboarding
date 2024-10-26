@@ -7,7 +7,9 @@ use App\Form\UserInfoType;
 use App\Form\AddressType;
 use App\Form\PaymentType;
 use App\Service\OnboardingService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,14 +24,28 @@ class OnboardingController extends AbstractController
         $form = $this->createForm(UserInfoType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Save data to session or database and redirect to the next step
-            $data = $form->getData();
-            $request->getSession()->set('user_info', $data);
+        if ($request->isXmlHttpRequest()) { // Check if it's an AJAX request
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Store user info temporarily in session
+                $data = $form->getData();
+                $request->getSession()->set('user_info', $data);
 
-            return $this->redirectToRoute('onboarding_address');
+                return new JsonResponse([
+                    'success' => true,
+                    'redirectUrl' => $this->generateUrl('onboarding_address') // Redirect to the next step
+                ]);
+            }
+
+            // If form validation fails, return errors as JSON
+            $errors = [];
+            foreach ($form->getErrors(true) as $error) {
+                $errors[$error->getOrigin()->getName()] = $error->getMessage();
+            }
+
+            return $this->json(['success' => false, 'errors' => $errors], Response::HTTP_BAD_REQUEST);
         }
 
+        // For non-AJAX requests, render the template as usual
         return $this->render('onboarding/user_info.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -41,18 +57,28 @@ class OnboardingController extends AbstractController
         $form = $this->createForm(AddressType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $request->getSession()->set('address', $data);
+        if ($request->isXmlHttpRequest()) { // Check if it's an AJAX request
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Store address data in session or handle as needed
+                $data = $form->getData();
+                $request->getSession()->set('address', $data);
 
-            // Redirect based on subscription type
-            $userInfo = $request->getSession()->get('user_info');
-            if ($userInfo['subscriptionType'] === 'premium') {
-                return $this->redirectToRoute('onboarding_payment');
+                return new JsonResponse([
+                    'success' => true,
+                    'redirectUrl' => $this->generateUrl('onboarding_confirmation')
+                ]);
             }
-            return $this->redirectToRoute('onboarding_confirmation');
+
+            // Return validation errors if form submission fails
+            $errors = [];
+            foreach ($form->getErrors(true) as $error) {
+                $errors[$error->getOrigin()->getName()] = $error->getMessage();
+            }
+
+            return new JsonResponse(['success' => false, 'errors' => $errors], Response::HTTP_BAD_REQUEST);
         }
 
+        // For non-AJAX requests, render the template as usual
         return $this->render('onboarding/address.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -63,17 +89,44 @@ class OnboardingController extends AbstractController
     {
         $form = $this->createForm(PaymentType::class);
         $form->handleRequest($request);
+        if ($request->isXmlHttpRequest()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Save payment data temporarily in the session
+                $request->getSession()->set('payment', $form->getData());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $request->getSession()->set('payment', $data);
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Payment information saved successfully!',
+                    'redirectUrl' => $this->generateUrl('onboarding_confirmation')
+                ]);
+            }
 
-            return $this->redirectToRoute('onboarding_confirmation');
+            // If not valid, return errors as JSON
+            $errors = [];
+            foreach ($form->getErrors(true) as $error) {
+                $errors[$error->getOrigin()->getName()] = $error->getMessage();
+            }
+
+            return $this->json(['success' => false, 'errors' => $errors], Response::HTTP_BAD_REQUEST);
         }
 
+        // For non-AJAX requests, render the page normally
         return $this->render('onboarding/payment.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    private function savePaymentData(array $paymentData)
+    {
+        // Create a new Payment entity (assuming you have this entity)
+        $payment = new Payment();
+        $payment->setCardNumber($paymentData['cardNumber']);
+        $payment->setExpirationDate($paymentData['expirationDate']);
+        $payment->setCvv($paymentData['cvv']);
+
+        // Persist and flush to save to the database
+        $this->entityManager->persist($payment);
+        $this->entityManager->flush();
     }
 
     #[Route('/onboarding/submit', name: 'onboarding_submit', methods: ['POST'])]

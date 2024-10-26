@@ -2,9 +2,94 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Address Information</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Next</button>
-    {{ form_end(form) }}
+    <div data-controller="async-form">
+        <h1>{{ 'Address Information'|trans }}</h1>
+
+        {{ form_start(form, {
+            'attr': {
+                'data-async-form-target': 'form',
+                'data-action': 'submit->async-form#submitForm',
+                'class': 'row g-3'
+            }
+        }) }}
+
+        <div class="col-md-6">
+            {{ form_label(form.addressLine1) }}
+            {{ form_widget(form.addressLine1, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.addressLine1.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.addressLine1) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.addressLine2) }}
+            {{ form_widget(form.addressLine2, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control'
+                }
+            }) }}
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.city) }}
+            {{ form_widget(form.city, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.city.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.city) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.postalCode) }}
+            {{ form_widget(form.postalCode, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.postalCode.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.postalCode) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.stateProvince) }}
+            {{ form_widget(form.stateProvince, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.stateProvince.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.stateProvince) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.country) }}
+            {{ form_widget(form.country, {
+                'attr': {
+                    'data-action': 'change->async-form#validateField',
+                    'class': 'form-select' ~ (form.country.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.country) }}
+            </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">{{ 'Next'|trans }}</button>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

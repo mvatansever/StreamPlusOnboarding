@@ -2,9 +2,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Payment Information</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Next</button>
-    {{ form_end(form) }}
+    <div data-controller="async-form">
+        <h1>{{ 'Payment Information'|trans }}</h1>
+
+        {{ form_start(form, {
+            'attr': {
+                'data-async-form-target': 'form',
+                'data-action': 'submit->async-form#submitForm',
+                'class': 'row g-3'
+            }
+        }) }}
+
+        <div class="col-md-6">
+            {{ form_label(form.cardNumber) }}
+            {{ form_widget(form.cardNumber, {
+                'attr': {
+                    'class': 'form-control' ~ (form.cardNumber.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.cardNumber) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.expirationDate) }}
+            {{ form_widget(form.expirationDate, {
+                'attr': {
+                    'class': 'form-control' ~ (form.expirationDate.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.expirationDate) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.cvv) }}
+            {{ form_widget(form.cvv, {
+                'attr': {
+                    'class': 'form-control' ~ (form.cvv.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.cvv) }}
+            </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">{{ 'Next'|trans }}</button>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

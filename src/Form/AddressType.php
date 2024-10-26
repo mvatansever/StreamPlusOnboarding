@@ -14,7 +14,7 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('addressLine1', TextType::class, ['constraints' => [new Assert\NotBlank()]])
+            ->add('addressLine1', TextType::class, ['constraints' => [new Assert\NotBlank(), new Assert\Length(null, 10)]])
             ->add('addressLine2', TextType::class, ['required' => false])
             ->add('city', TextType::class, ['constraints' => [new Assert\NotBlank()]])
             ->add('postalCode', TextType::class, ['constraints' => [new Assert\NotBlank()]])

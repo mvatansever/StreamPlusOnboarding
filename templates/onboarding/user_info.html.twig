@@ -2,16 +2,71 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1>User Information</h1>
-        {{ form_start(form, {'attr': {'class': 'row g-3'}}) }}
+    <div data-controller="async-form">
+        <h1>{{ 'User Information'|trans }}</h1>
+
+        {{ form_start(form, {
+            'attr': {
+                'data-async-form-target': 'form',
+                'data-action': 'submit->async-form#submitForm',
+                'class': 'row g-3'
+            }
+        }) }}
+
         <div class="col-md-6">
-            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.name.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.name) }}
+            </span>
         </div>
+
         <div class="col-md-6">
-            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.email.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.email) }}
+            </span>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Next</button>
+
+        <div class="col-md-6">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone, {
+                'attr': {
+                    'data-action': 'input->async-form#validateField',
+                    'class': 'form-control' ~ (form.phone.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.phone) }}
+            </span>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.subscriptionType) }}
+            {{ form_widget(form.subscriptionType, {
+                'attr': {
+                    'data-action': 'change->async-form#validateField',
+                    'class': 'form-select' ~ (form.subscriptionType.vars.errors ? ' is-invalid' : '')
+                }
+            }) }}
+            <span class="invalid-feedback" data-async-form-target="feedback">
+                {{ form_errors(form.subscriptionType) }}
+            </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">{{ 'Next'|trans }}</button>
+
         {{ form_end(form) }}
     </div>
 {% endblock %}
