@@ -3,6 +3,7 @@
 // src/Form/PaymentType.php
 namespace App\Form;
 
+use App\Validator\Constraints\FutureExpirationDate;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,7 +19,11 @@ class PaymentType extends AbstractType
                 'constraints' => [new Assert\NotBlank(), new Assert\Luhn(), new Assert\Regex('/^\d{12,19}$/')]
             ])
             ->add('expirationDate', TextType::class, [
-                'constraints' => [new Assert\NotBlank(), new Assert\Regex('/^(0[1-9]|1[0-2])\/\d{2}$/')],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Regex('/^(0[1-9]|1[0-2])\/\d{2}$/'),
+                    new FutureExpirationDate(),
+                ],
             ])
             ->add('cvv', TextType::class, [
                 'constraints' => [new Assert\NotBlank(), new Assert\Regex('/^\d{3}$/')]
