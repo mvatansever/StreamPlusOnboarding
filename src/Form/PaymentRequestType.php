@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PaymentType extends AbstractType
+class PaymentRequestType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
