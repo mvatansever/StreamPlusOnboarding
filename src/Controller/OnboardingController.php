@@ -30,9 +30,18 @@ class OnboardingController extends AbstractController
                 $data = $form->getData();
                 $request->getSession()->set('user_info', $data);
 
+                // Redirect based on subscription type
+                $userInfo = $request->getSession()->get('user_info');
+                if ($userInfo['subscriptionType'] === 'premium') {
+                    return new JsonResponse([
+                        'success' => true,
+                        'redirectUrl' => $this->generateUrl('onboarding_payment')
+                    ]);
+                }
+
                 return new JsonResponse([
                     'success' => true,
-                    'redirectUrl' => $this->generateUrl('onboarding_address') // Redirect to the next step
+                    'redirectUrl' => $this->generateUrl('onboarding_address')
                 ]);
             }
 
@@ -96,8 +105,7 @@ class OnboardingController extends AbstractController
 
                 return $this->json([
                     'success' => true,
-                    'message' => 'Payment information saved successfully!',
-                    'redirectUrl' => $this->generateUrl('onboarding_confirmation')
+                    'redirectUrl' => $this->generateUrl('onboarding_address')
                 ]);
             }
 
@@ -114,19 +122,6 @@ class OnboardingController extends AbstractController
         return $this->render('onboarding/payment.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    private function savePaymentData(array $paymentData)
-    {
-        // Create a new Payment entity (assuming you have this entity)
-        $payment = new Payment();
-        $payment->setCardNumber($paymentData['cardNumber']);
-        $payment->setExpirationDate($paymentData['expirationDate']);
-        $payment->setCvv($paymentData['cvv']);
-
-        // Persist and flush to save to the database
-        $this->entityManager->persist($payment);
-        $this->entityManager->flush();
     }
 
     #[Route('/onboarding/submit', name: 'onboarding_submit', methods: ['POST'])]

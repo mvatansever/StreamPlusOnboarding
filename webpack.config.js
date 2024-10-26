@@ -9,6 +9,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
+    .enableSassLoader()
     .enableStimulusBridge('./assets/controllers.json') // Required for Symfony UX Stimulus
 ;
 

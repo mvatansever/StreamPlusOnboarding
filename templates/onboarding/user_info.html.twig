@@ -2,19 +2,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div data-controller="async-form">
-        <h1>{{ 'User Information'|trans }}</h1>
+    <div class="container my-4" data-controller="async-form">
+        <h1 class="mb-4">{{ 'User Information'|trans }}</h1>
 
         {{ form_start(form, {
             'attr': {
                 'data-async-form-target': 'form',
                 'data-action': 'submit->async-form#submitForm',
-                'class': 'row g-3'
+                'class': 'row g-3 needs-validation'
             }
         }) }}
 
         <div class="col-md-6">
-            {{ form_label(form.name) }}
+            {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.name, {
                 'attr': {
                     'data-action': 'input->async-form#validateField',
@@ -22,12 +22,12 @@
                 }
             }) }}
             <span class="invalid-feedback" data-async-form-target="feedback">
-                {{ form_errors(form.name) }}
-            </span>
+            {{ form_errors(form.name) }}
+        </span>
         </div>
 
         <div class="col-md-6">
-            {{ form_label(form.email) }}
+            {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.email, {
                 'attr': {
                     'data-action': 'input->async-form#validateField',
@@ -35,12 +35,12 @@
                 }
             }) }}
             <span class="invalid-feedback" data-async-form-target="feedback">
-                {{ form_errors(form.email) }}
-            </span>
+            {{ form_errors(form.email) }}
+        </span>
         </div>
 
         <div class="col-md-6">
-            {{ form_label(form.phone) }}
+            {{ form_label(form.phone, null, {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.phone, {
                 'attr': {
                     'data-action': 'input->async-form#validateField',
@@ -48,12 +48,12 @@
                 }
             }) }}
             <span class="invalid-feedback" data-async-form-target="feedback">
-                {{ form_errors(form.phone) }}
-            </span>
+            {{ form_errors(form.phone) }}
+        </span>
         </div>
 
         <div class="col-md-6">
-            {{ form_label(form.subscriptionType) }}
+            {{ form_label(form.subscriptionType, null, {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.subscriptionType, {
                 'attr': {
                     'data-action': 'change->async-form#validateField',
@@ -61,11 +61,13 @@
                 }
             }) }}
             <span class="invalid-feedback" data-async-form-target="feedback">
-                {{ form_errors(form.subscriptionType) }}
-            </span>
+            {{ form_errors(form.subscriptionType) }}
+        </span>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">{{ 'Next'|trans }}</button>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">{{ 'Next'|trans }}</button>
+        </div>
 
         {{ form_end(form) }}
     </div>
