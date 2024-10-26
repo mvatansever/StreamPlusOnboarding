@@ -9,8 +9,10 @@ services:
     container_name: symfony_nginx
     ports:
       - "8080:80"
+    networks:
+      - mynetwork
     volumes:
       - ./:/var/www/html
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php

@@ -23,9 +23,9 @@ class Payment
     #[Assert\Regex(pattern: "/^(0[1-9]|1[0-2])\/\d{2}$/", message: "Expiration date must be in MM/YY format.")]
     private $expirationDate;
 
-    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'payment')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'addresses')]
     #[ORM\JoinColumn(nullable: false)]
-    private $user;
+    private ?User $user = null;
 
     // Getters and setters...
 

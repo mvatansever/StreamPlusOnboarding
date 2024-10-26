@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -30,6 +32,31 @@ class User
     #[ORM\Column(type: 'string', length: 10)]
     #[Assert\Choice(choices: ["free", "premium"], message: "Choose a valid subscription type.")]
     private $subscriptionType;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Address::class, cascade: ['persist'])]
+    private Collection $addresses;
+
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Payment::class, cascade: ['persist'])]
+    private ?Payment $payment = null;
+
+    public function __construct()
+    {
+        $this->addresses = new ArrayCollection();
+    }
+
+    public function addAddress(Address $address): self
+    {
+        $this->addresses->add($address);
+        $address->setUser($this);
+        return $this;
+    }
+
+    public function setPayment(Payment $payment): self
+    {
+        $this->payment = $payment;
+        $payment->setUser($this);
+        return $this;
+    }
 
     public function getId()
     {

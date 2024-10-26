@@ -1,0 +1,39 @@
+{# templates/onboarding/confirmation.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Confirmation</h1>
+
+    <h2>User Information</h2>
+    <ul>
+        <li><strong>Name:</strong> {{ userInfo.name }}</li>
+        <li><strong>Email:</strong> {{ userInfo.email }}</li>
+        <li><strong>Phone:</strong> {{ userInfo.phone }}</li>
+        <li><strong>Subscription Type:</strong> {{ userInfo.subscriptionType }}</li>
+    </ul>
+
+    <h2>Address Information</h2>
+    <ul>
+        <li><strong>Address Line 1:</strong> {{ address.addressLine1 }}</li>
+        {% if address.addressLine2 %}
+            <li><strong>Address Line 2:</strong> {{ address.addressLine2 }}</li>
+        {% endif %}
+        <li><strong>City:</strong> {{ address.city }}</li>
+        <li><strong>Postal Code:</strong> {{ address.postalCode }}</li>
+        <li><strong>State/Province:</strong> {{ address.stateProvince }}</li>
+        <li><strong>Country:</strong> {{ address.country }}</li>
+    </ul>
+
+    {% if payment is defined and payment is not null %}
+        <h2>Payment Information</h2>
+        <ul>
+            <li><strong>Card Number:</strong> **** **** **** {{ payment.cardNumber[-4:] }}</li>
+            <li><strong>Expiration Date:</strong> {{ payment.expirationDate }}</li>
+        </ul>
+    {% endif %}
+
+    <form method="post" action="{{ path('onboarding_submit') }}">
+        <button type="submit">Confirm and Submit</button>
+    </form>
+
+{% endblock %}
