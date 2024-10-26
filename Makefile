@@ -5,7 +5,10 @@ DOCKER_DB = $(DOCKER_COMPOSE) exec database
 PROJECT_NAME = StreamPlusOnboarding
 
 # Commands
-.PHONY: build up down composer-install exec migrate cache-clear test
+.PHONY: build up down composer-install exec migrate cache-clear test build-assets
+
+# Run all necessary for first step.
+run-all: build up composer-install migrate build-assets
 
 # Build Docker containers
 build:
@@ -34,6 +37,11 @@ migrate:
 # Clear cache
 cache-clear:
 	$(DOCKER_PHP) bin/console cache:clear
+
+# Build assets
+build-assets:
+	$(DOCKER_COMPOSE) exec php npm install
+	$(DOCKER_COMPOSE) exec php npm run encore production
 
 # Run tests
 test:

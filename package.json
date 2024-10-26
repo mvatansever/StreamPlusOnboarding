@@ -4,19 +4,18 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "encore dev",
-    "build": "encore production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "encore": "encore"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@hotwired/stimulus": "^3.1.0",
     "@symfony/stimulus-bridge": "^3.2.0",
     "@symfony/webpack-encore": "^5.0.0",
     "sass": "^1.80.4",
-    "sass-loader": "^16.0.2"
+    "sass-loader": "^16.0.2",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^5.0.0"
   },
   "dependencies": {
     "bootstrap": "^5.3.3"
