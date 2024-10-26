@@ -55,12 +55,10 @@ Run the tests using PHPUnit:
 
 The application uses MySQL as the database. Make sure to set the correct credentials in the `docker-compose.yml` file if needed.
 
-### Key Changes:
+## Key Changes:
 1. **Additional Tools and Libraries Section**: This new section lists the additional libraries and tools used in the project, providing clarity on the tech stack.
 2. **Formatting**: I've added code block syntax for clarity and fixed the bullet points under the steps.
 
-Feel free to modify the content to better suit your project’s specifics!
-
-## You can use the development tools
+### You can use the development tools
 - You can see the PHPStan static analyse check: `make phpstan-check`
 - You can CS Fixer static analyse check: `make code-fixer-fix`
